@@ -4,7 +4,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch('http://nodejs-repuestos-production.up.railway.app/api/login', {
+    const response = await fetch('https://nodejs-repuestos-production.up.railway.app/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

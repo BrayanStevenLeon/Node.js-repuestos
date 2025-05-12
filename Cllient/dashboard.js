@@ -23,7 +23,7 @@ document.getElementById('userForm').addEventListener('submit', async function(e)
     const contraseña = document.getElementById('contraseña').value;
     const rol = document.getElementById('rol').value;
 
-    const response = await fetch('http://nodejs-repuestos-production.up.railway.app/api/users', {
+    const response = await fetch('https://nodejs-repuestos-production.up.railway.app/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -38,7 +38,7 @@ document.getElementById('userForm').addEventListener('submit', async function(e)
 });
 
 async function cargarUsuarios() {
-    const response = await fetch('http://nodejs-repuestos-production.up.railway.app/api/users', {
+    const response = await fetch('https://nodejs-repuestos-production.up.railway.app/api/users', {
         credentials: 'include'
     });
     const usuarios = await response.json();
@@ -64,7 +64,7 @@ async function cargarUsuarios() {
 
 async function eliminarUsuario(id) {
     if (confirm("¿Estás seguro de eliminar este usuario?")) {
-        await fetch(`http://nodejs-repuestos-production.up.railway.app/api/users/${id}`, { method: 'DELETE',credentials: 'include' });
+        await fetch(`https://nodejs-repuestos-production.up.railway.app/api/users/${id}`, { method: 'DELETE',credentials: 'include' });
         cargarUsuarios(); 
     }
 }
@@ -86,7 +86,7 @@ async function editarUsuario(id) {
             body.contraseña = nuevaContraseña;
         }
 
-        await fetch(`http://nodejs-repuestos-production.up.railway.app/api/users/${id}`, {
+        await fetch(`https://nodejs-repuestos-production.up.railway.app/api/users/${id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
@@ -99,7 +99,7 @@ async function editarUsuario(id) {
 
 document.getElementById('logoutButton').addEventListener('click', async function() {
     try {
-        const response = await fetch('http://nodejs-repuestos-production.up.railway.app/api/logout', { method: 'POST', credentials: 'include'
+        const response = await fetch('https://nodejs-repuestos-production.up.railway.app/api/logout', { method: 'POST', credentials: 'include'
          });
 
         if (response.ok) {

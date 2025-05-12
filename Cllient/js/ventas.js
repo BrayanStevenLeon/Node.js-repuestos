@@ -28,7 +28,7 @@ function cargarVentas() {
   const select = document.getElementById('filtroEstadoPago');
   const estadoSeleccionado = select ? select.value : 'todos';
 
-  fetch('http://nodejs-repuestos-production.up.railway.app/api/ventas')
+  fetch('https://nodejs-repuestos-production.up.railway.app/api/ventas')
     .then(res => res.json())
     .then(data => {
       const tbody = document.querySelector('#tabla-ventas tbody');
@@ -68,7 +68,7 @@ function cargarVentas() {
           } else if (venta.estado_pago === 'pagado') {
             botonAccion = `
               <div style="display: flex; gap: 10px;">
-                <a href="http://nodejs-repuestos-production.up.railway.app/${venta.factura_pdf}" target="_blank" download class="btn-descargar-factura" title="Descargar factura">
+                <a href="https://nodejs-repuestos-production.up.railway.app/${venta.factura_pdf}" target="_blank" download class="btn-descargar-factura" title="Descargar factura">
                   <i class="fa-solid fa-file-arrow-down"></i>
                 </a>
               </div>
@@ -120,7 +120,7 @@ document.addEventListener('click', async e => {
   if (e.target.closest('.btn-pagar')) {
     const idVenta = e.target.closest('.btn-pagar').dataset.id;
     try {
-      const res = await fetch(`http://nodejs-repuestos-production.up.railway.app/api/ventas/pagar/${idVenta}`, {
+      const res = await fetch(`https://nodejs-repuestos-production.up.railway.app/api/ventas/pagar/${idVenta}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ usuario_id: usuario.id })
@@ -135,7 +135,7 @@ document.addEventListener('click', async e => {
     const idVenta = e.target.closest('.btn-cancelar').dataset.id;
     if (!confirm('¿Cancelar esta venta?')) return;
     try {
-      const res = await fetch(`http://nodejs-repuestos-production.up.railway.app/api/ventas/cancelar/${idVenta}`, {
+      const res = await fetch(`https://nodejs-repuestos-production.up.railway.app/api/ventas/cancelar/${idVenta}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ usuario_id: usuario.id })
@@ -149,7 +149,7 @@ document.addEventListener('click', async e => {
   if (e.target.closest('.btn-detalle')) {
     const idVenta = e.target.closest('.btn-detalle').dataset.id;
     try {
-      const res = await fetch(`http://nodejs-repuestos-production.up.railway.app/api/ventas/detalle/${idVenta}`);
+      const res = await fetch(`https://nodejs-repuestos-production.up.railway.app/api/ventas/detalle/${idVenta}`);
       const detalle = await res.json();
       if (res.ok) mostrarDetalleModal(detalle);
       else alert('Error al obtener detalle');
@@ -159,7 +159,7 @@ document.addEventListener('click', async e => {
 
 // Cerrar sesión
 function cerrarSesion() {
-  fetch('http://nodejs-repuestos-production.up.railway.app/api/logout', { method: 'POST' })
+  fetch('https://nodejs-repuestos-production.up.railway.app/api/logout', { method: 'POST' })
     .then(r => {
       if (r.ok) { localStorage.removeItem('usuario'); location.replace('index.htm'); }
       else alert('Error al cerrar sesión');

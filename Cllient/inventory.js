@@ -24,12 +24,12 @@ window.addEventListener('DOMContentLoaded', initPagina);
 window.addEventListener('pageshow', initPagina);
 
 
-const apiUrl = 'http://nodejs-repuestos-production.up.railway.app/api/inventory/productos';
+const apiUrl = 'https://nodejs-repuestos-production.up.railway.app/api/inventory/productos';
 
 // Cargar Categorías 
 async function cargarCategorias() {
     try {
-        const response = await fetch("http://nodejs-repuestos-production.up.railway.app/api/inventory/categorias");
+        const response = await fetch("https://nodejs-repuestos-production.up.railway.app/api/inventory/categorias");
         const categorias = await response.json();
         const selectCategoria = document.getElementById("categoria");
 
@@ -66,7 +66,7 @@ document.getElementById("formCategoria").addEventListener("submit", async (event
     console.log("Datos enviados al backend:", { nombre, descripcion });
     const data = { nombre, descripcion };
    
-    const url = id ? `http://nodejs-repuestos-production.up.railway.app/api/inventory/categorias/editar/${id}` : "http://nodejs-repuestos-production.up.railway.app/api/inventory/categorias/agregar";
+    const url = id ? `https://nodejs-repuestos-production.up.railway.app/api/inventory/categorias/editar/${id}` : "http://nodejs-repuestos-production.up.railway.app/api/inventory/categorias/agregar";
     const method = id ? "PUT" : "POST";
     
     try {
@@ -93,7 +93,7 @@ function editarCategoria(id, nombre, descripcion) {
 async function eliminarCategoria(id) {
     if (confirm("¿Estás seguro de eliminar esta categoría?")) {
         try {
-            await fetch(`http://nodejs-repuestos-production.up.railway.app/api/inventory/categorias/eliminar/${id}`, {
+            await fetch(`https://nodejs-repuestos-production.up.railway.app/api/inventory/categorias/eliminar/${id}`, {
                 method: "DELETE"
             });
             alert("Categoría eliminada");
@@ -106,7 +106,7 @@ async function eliminarCategoria(id) {
 //
 async function cargarProveedores() {
     try {
-        const response = await fetch("http://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores");
+        const response = await fetch("https://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores");
         const proveedores = await response.json();
         const selectProveedor = document.getElementById("proveedor");
         const modalProveedorTable = document.getElementById("modalProveedorTable");
@@ -152,7 +152,7 @@ document.getElementById("formProveedor").addEventListener("submit", async (event
     const direccion = document.getElementById("proveedorDireccion").value.trim();
 
     const data = { nombre, contacto, telefono, email, direccion };
-    const url = id ? `http://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores/editar/${id}` : "http://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores/agregar";
+    const url = id ? `https://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores/editar/${id}` : "http://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores/agregar";
     const method = id ? "PUT" : "POST";
 
     try {
@@ -184,7 +184,7 @@ function editarProveedor(id, nombre, contacto, telefono, email, direccion) {
 async function eliminarProveedor(id) {
     if (confirm("¿Estás seguro de eliminar este proveedor?")) {
         try {
-            await fetch(`http://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores/eliminar/${id}`, {
+            await fetch(`https://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores/eliminar/${id}`, {
                 method: "DELETE"
             });
             alert("Proveedor eliminado");
@@ -385,7 +385,7 @@ function mostrarUsuario() {
 // Cerrar sesión
 document.getElementById('logoutButton').addEventListener('click', async function() {
     try {
-        const response = await fetch('http://nodejs-repuestos-production.up.railway.app/api/logout', { method: 'POST' });
+        const response = await fetch('https://nodejs-repuestos-production.up.railway.app/api/logout', { method: 'POST' });
 
         if (response.ok) {
             localStorage.removeItem('usuario');

@@ -34,6 +34,16 @@ app.use(cors({
     credentials: true
 }));
 
+// Manejo explícito de las preflight requests
+app.options('*', cors({
+    origin: [
+        "http://127.0.0.1:5500",
+        "http://127.0.0.1:5501",
+        "https://nodejs-repuestos-production.up.railway.app"
+    ],
+    credentials: true
+}));
+
 // Configurar sesiones
 app.use(session({
     secret: 'mi_secreto',
@@ -41,7 +51,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: 'none' 
     }
 }));
