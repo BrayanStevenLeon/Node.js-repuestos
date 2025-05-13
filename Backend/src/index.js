@@ -26,7 +26,11 @@ app.set("port", process.env.PORT || 4000);
 
 
 app.use(cors({
-    origin: ["http://127.0.0.1:5501", "http://127.0.0.1:5500"],
+    origin: [
+        "http://127.0.0.1:5500",
+        "http://127.0.0.1:5501",
+        "https://nodejs-repuestos-production.up.railway.app"
+    ],
     credentials: true
 }));
 

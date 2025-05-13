@@ -35,7 +35,7 @@ document.getElementById('btnGenerarReporte').addEventListener('click', async () 
     const usuario = JSON.parse(usuarioGuardado);
 
     try {
-        const response = await fetch('http://127.0.0.1:4000/api/reportes/generar', {
+        const response = await fetch('http://nodejs-repuestos-production.up.railway.app/api/reportes/generar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include', // por si usas cookies también
@@ -58,13 +58,13 @@ document.getElementById('btnGenerarReporte').addEventListener('click', async () 
     }
 });
 
-const API_BASE = 'http://127.0.0.1:4000';
+const API_BASE = 'http://nodejs-repuestos-production.up.railway.app';
 
 async function abrirHistorialReportes() {
     try {
       const usuario = JSON.parse(localStorage.getItem("usuario"));
   
-      const response = await fetch("http://127.0.0.1:4000/api/reportes/historial");
+      const response = await fetch("http://nodejs-repuestos-production.up.railway.app/api/reportes/historial");
       const data = await response.json();
   
       const reportes = data.reportes; // 👈 extraer del objeto
@@ -149,7 +149,7 @@ async function abrirHistorialReportes() {
 
 document.getElementById('logoutButton').addEventListener('click', async function () {
   try {
-    const response = await fetch('http://localhost:4000/api/logout', { method: 'POST' });
+    const response = await fetch('http://nodejs-repuestos-production.up.railway.app/api/logout', { method: 'POST' });
 
     if (response.ok) {
       localStorage.removeItem('usuario');
@@ -164,7 +164,7 @@ document.getElementById('logoutButton').addEventListener('click', async function
 
 async function cargarResumenEstadisticas() {
   try {
-    const response = await fetch('http://127.0.0.1:4000/api/reportes/resumen'); // backend
+    const response = await fetch('http://nodejs-repuestos-production.up.railway.app/api/reportes/resumen'); // backend
     const data = await response.json();
 
     document.querySelector('#resumenVentas .valor').textContent = data.totalVentas;
@@ -177,7 +177,7 @@ async function cargarResumenEstadisticas() {
 
 async function cargarGraficaVentasDia() {
   try {
-    const response = await fetch("http://127.0.0.1:4000/api/reportes/ventas-por-dia");
+    const response = await fetch("http://nodejs-repuestos-production.up.railway.app/api/reportes/ventas-por-dia");
     const data = await response.json();
 
     const fechas = data.map(item => item.fecha);
@@ -215,7 +215,7 @@ async function cargarGraficaVentasDia() {
 cargarGraficaVentasDia();
 
 async function cargarProductosMasVendidos() {
-  const res = await fetch('http://127.0.0.1:4000/api/reportes/productos-mas-vendidos');
+  const res = await fetch('http://nodejs-repuestos-production.up.railway.app/api/reportes/productos-mas-vendidos');
   const data = await res.json();
 
   const nombres = data.map(item => item.nombre);
@@ -250,7 +250,7 @@ async function cargarProductosMasVendidos() {
 cargarProductosMasVendidos();
 
 function cargarVentasPorCategoria() {
-  fetch('http://127.0.0.1:4000/api/reportes/ventas-por-categoria')
+  fetch('http://nodejs-repuestos-production.up.railway.app/api/reportes/ventas-por-categoria')
     .then(res => res.json())
     .then(data => {
       const labels = data.map(item => item.categoria);
@@ -291,7 +291,7 @@ function cargarVentasPorCategoria() {
 
   async function cargarGraficaEstadosPedidos() {
     try {
-      const response = await fetch('http://127.0.0.1:4000/api/reportes/estados-pedidos');
+      const response = await fetch('http://nodejs-repuestos-production.up.railway.app/api/reportes/estados-pedidos');
       const data = await response.json();
 
       const ctx = document.getElementById('graficaEstadosPedidos').getContext('2d');
@@ -336,8 +336,8 @@ async function cargarLogs() {
 
   try {
     const [resProd, resVent] = await Promise.all([
-      fetch('http://localhost:4000/api/reportes/logs-productos'),
-      fetch('http://localhost:4000/api/reportes/logs-ventas')
+      fetch('http://nodejs-repuestos-production.up.railway.app/api/reportes/logs-productos'),
+      fetch('http://nodejs-repuestos-production.up.railway.app/api/reportes/logs-ventas')
     ]);
     const [logsProd, logsVent] = await Promise.all([resProd.json(), resVent.json()]);
 

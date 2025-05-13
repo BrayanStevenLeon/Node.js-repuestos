@@ -148,7 +148,7 @@ formCompra.addEventListener("submit", function (e) {
       carrito
     };
 
-    fetch("http://localhost:4000/api/compras", {
+    fetch("http://nodejs-repuestos-production.up.railway.app/api/compras", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datosPedido),
