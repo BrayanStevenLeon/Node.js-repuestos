@@ -24,6 +24,17 @@ const app = express();
 //configurar puerto
 app.set("port", process.env.PORT || 4000);
 
+// Redirigir todo HTTP a HTTPS en producción (excepto preflight)
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV === 'production') {
+    const proto = req.headers['x-forwarded-proto'];
+    if (proto && proto !== 'https' && req.method !== 'OPTIONS') {
+      return res.redirect('https://' + req.headers.host + req.url);
+    }
+  }
+  next();
+});
+
 
 // CORS
 const corsOptions = {
