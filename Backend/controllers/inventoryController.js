@@ -1,6 +1,6 @@
 const database = require("../src/database");
 const path = require("path");
-
+const cloudinary = require("../utils/cloudinary");
 // Obtener productos
 const getProducts = async (req, res) => {
   try {
@@ -36,18 +36,25 @@ const addProduct = async (req, res) => {
       nombre, descripcion, precio, stock,
       categoria_id, proveedor_id, usuario_id
     } = req.body;
-    const urlImagen = req.file
-      ? `/imagenes/productos/${req.file.filename}`
-      : null;
 
-    // 1) Inserto el producto
+    let urlImagen = null;
+
+    // ✅ Subir a Cloudinary si hay imagen
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "productos"
+      });
+      urlImagen = result.secure_url;
+    }
+
     const [result] = await connection.query(
-      "INSERT INTO productos (nombre, descripcion, urlImagen, precio, stock, categoria_id, proveedor_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      `INSERT INTO productos (nombre, descripcion, urlImagen, precio, stock, categoria_id, proveedor_id)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [nombre, descripcion, urlImagen, precio, stock, categoria_id, proveedor_id]
     );
+
     const newProductId = result.insertId;
 
-    // 2) Registro en logs_actividad
     if (usuario_id) {
       const descripcionLog = `Se creó el producto ID ${newProductId}: ${nombre}`;
       await connection.query(
@@ -64,18 +71,30 @@ const addProduct = async (req, res) => {
   }
 };
 
-
 // Editar producto
 const updateProduct = async (req, res) => {
   try {
     const connection = await database.getConnection();
-    const { nombre, descripcion, precio, stock, categoria_id, proveedor_id, usuario_id } = req.body;
+    const {
+      nombre, descripcion, precio, stock,
+      categoria_id, proveedor_id, usuario_id
+    } = req.body;
     const id = req.params.id;
-    const urlImagen = req.file ? `/imagenes/productos/${req.file.filename}` : null;
 
+    let urlImagen = null;
+
+    // ✅ Subir nueva imagen a Cloudinary si se proporcionó
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "productos"
+      });
+      urlImagen = result.secure_url;
+    }
+
+    // ✅ Preparar consulta SQL dependiendo si hay nueva imagen o no
     const sql = urlImagen
-      ? "UPDATE productos SET nombre=?, descripcion=?, urlImagen=?, precio=?, stock=?, categoria_id=?, proveedor_id=? WHERE id=?"
-      : "UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=?, categoria_id=?, proveedor_id=? WHERE id=?";
+      ? `UPDATE productos SET nombre=?, descripcion=?, urlImagen=?, precio=?, stock=?, categoria_id=?, proveedor_id=? WHERE id=?`
+      : `UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=?, categoria_id=?, proveedor_id=? WHERE id=?`;
 
     const params = urlImagen
       ? [nombre, descripcion, urlImagen, precio, stock, categoria_id, proveedor_id, id]
@@ -83,7 +102,7 @@ const updateProduct = async (req, res) => {
 
     await connection.query(sql, params);
 
-    // 👉 Registro en logs_actividad
+    // ✅ Registrar actividad
     if (usuario_id) {
       const descripcionLog = `El producto con ID ${id} fue actualizado: ${nombre}`;
       await connection.query(`
@@ -98,6 +117,7 @@ const updateProduct = async (req, res) => {
     res.status(500).send("Error al actualizar producto");
   }
 };
+
 
 // Eliminar producto
 const deleteProduct = async (req, res) => {
