@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Inventario</title>
+    <link rel="stylesheet" href="inventory.css" />
+    <style>
+      
+      body {
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="vertical-menu">
+      <img src="../imagenes/logo1.png" alt="Logo tienda autorrepuestos" />
+      <nav>
+        <ul>
+          <li><a href="dashboard.html">Usuarios</a></li>
+          <li><a href="inventory.html">Productos</a></li>
+          <li><a href="ventas.html">Ventas</a></li>
+          <li><a href="reportes.html">Reportes</a></li>
+        </ul>
+      </nav>
+      <button id="logoutButton">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </header>
+    <div class="nombreUsuario">
+      <h2>Bienvenido, <span id="nombreUsuario"></span></h2>
+      <p>Rol: <span id="rolUsuario"></span></p>
+    </div>
+    <hr class="divider" />
+    <form id="productForm">
+      <h1>Agregar productos</h1>
+      <div class="form-fields">
+        <input type="hidden" id="productId" />
+        <input type="text" id="nombre" placeholder="Nombre" required />
+        <textarea id="descripcion" placeholder="Descripción"></textarea>
+        <input
+          type="number"
+          id="precio"
+          step="0.01"
+          placeholder="Precio"
+          required
+        />
+        <input type="number" id="stock" placeholder="Stock" required />
+        <select id="categoria">
+          <option value="">Seleccione una categoría</option>
+        </select>
+        <select id="proveedor">
+          <option value="">Seleccione un proveedor</option>
+        </select>
+        <input type="file" id="imagen" />
+        <button type="submit">Guardar Producto</button>
+      </div>
+    </form>
+    <div class="contenedor-botones">
+      <button id="btnExportPDFProductos" class="btn btn-danger">📄 Exportar PDF</button>
+      <button id="btnExportExcelProductos" class="btn btn-success">📊 Exportar Excel</button>
+      <button id="btnProveedores" class="btn btn-primary">🚛 Proveedores</button>
+      <button id="btnCategorias" class="btn btn-primary">📂 Categorías</button>
+    </div>
+    <h2>Lista de Productos</h2>
+    <table border="1" id="tabla-productos" class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Categoría</th>
+          <th>Proveedor</th>
+          <th class="no-export">Imagen</th>
+          <th class="no-export">Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="productTable"></tbody>
+    </table>
+    // 
+    <div id="modalCategorias" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="cerrarModal('modalCategorias')">&times;</span>
+        <button id="btnExportPDFCategorias" class="btn btn-danger">📄 Exportar PDF</button>
+        <h2>Administrar Categorías</h2>
+        <form id="formCategoria">
+          <input type="hidden" id="categoriaId">
+          <input type="text" id="categoriaNombre" placeholder="Nombre categoria" required>
+          <input type="text" id="categoriaDescripcion" placeholder="Descripcion categoria" required>
+          <button type="submit">Agregar categoria</button>
+        </form>
+        <table id="tablaCategorias">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="modalCategoriaTable"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="modalProveedores" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="cerrarModal('modalProveedores')">&times;</span>
+        <button id="btnExportPDFProveedores" class="btn btn-danger">📄 Exportar PDF</button>
+        <h2>Administrar Proveedores</h2>
+        <form id="formProveedor">
+          <input type="hidden" id="proveedorId">
+          <input type="text" id="proveedorNombre" placeholder="Nombre" required>
+          <input type="text" id="proveedorContacto" placeholder="Contacto" required>
+          <input type="tel" id="proveedorTelefono" placeholder="Telefono" required>
+          <input type="email" id="proveedorEmail"  placeholder="Email" required>
+          <input type="text" id="proveedorDireccion" placeholder="Direccion" required>
+          <button type="submit">Agregar</button>
+        </form>
+        <table id="tablaProveedores">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Contacto</th>
+              <th>Telefono</th>
+              <th>Email</th>
+              <th>Direccion</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="modalProveedorTable"></tbody>
+        </table>
+      </div>
+    </div>
+    //
+    <script src="inventory.js"></script>
+    <!-- jsPDF y autoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- SheetJS para Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    
+
+  </body>
+</html>

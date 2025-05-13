@@ -1,0 +1,362 @@
+.contenedor-carrito {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+    gap: 20px; 
+    padding: 20px;
+}
+
+.productos-totales {
+    display: flex;
+    flex-direction: column;
+    width: 60%;  
+}
+
+/* Sección del carrito */
+#productos-container {
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Estilos de las tarjetas de producto */
+.tarjeta-producto {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.tarjeta-producto img {
+    height: 100px;
+    aspect-ratio: 1.5;
+}
+
+.tarjeta-producto h3 {
+    width: 130px;
+}
+
+.tarjeta-producto button {
+    width: 25px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #ab2727;
+    cursor: pointer;
+    border: none;
+    color: white;
+}
+
+/* Totales del carrito */
+#totales {
+    text-align: center;
+    margin-top: 10px;
+    margin-right: 200px;
+}
+
+/* Botones de los totales */
+#totales button {
+    text-align: center;
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #ab2727;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+/* Mensaje cuando el carrito está vacío */
+#carrito-vacio {
+    text-align: center;
+}
+
+/* Formulario de compra */
+.formulario-compra {
+    width: 40%;
+    background: white;
+    margin-right: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.formulario-compra h2 {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.formulario-compra label {
+    display: block;
+    margin-top: 10px;
+}
+
+.formulario-compra input, 
+.formulario-compra textarea
+ {
+    width: 95%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.formulario-compra select{
+    width: 98%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilos de botones generales */
+#boton_Compra {
+    width: 30%;
+    padding: 10px;
+    background: #a00;
+    margin-left: 170px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #800;
+}
+
+/* Modal Overlay */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .pago-contenedor {
+    display: flex;
+    height: 350px; 
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    margin: auto;
+  }
+  
+  .pago-imagen {
+    flex: 1;
+    height: 100%;
+  }
+  
+  .pago-imagen img {
+    width: 230%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .pago-formulario {
+    flex: 2;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-left: 100px;
+  }
+  
+  .pago-formulario h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  .pago-formulario label {
+    display: block;
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  
+  .pago-formulario input {
+    width: 90%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  
+  .pago-formulario button {
+    margin-top: 10px;
+    background-color: #ab2727;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    margin-left: -2px;
+    cursor: pointer;
+    width: 97%;
+    font-size: 14px;
+  }
+  
+  .pago-formulario button:hover {
+    background-color: #0056b3;
+  }
+  
+  #cerrarModal{
+    background-color: #ab2727;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    margin-top: 20px;
+    margin-left: 5px;
+    cursor: pointer;
+    width: 20%;
+    font-size: 14px;
+  }
+
+  #confirmarPedido{
+    background-color: #ab2727;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    margin-top: 20px;
+    margin-right: 30px;
+    cursor: pointer;
+    width: 40%;
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    .contenedor-carrito {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .productos-totales,
+    .formulario-compra {
+      width: 100%;
+      margin: 0;
+    }
+  
+    #boton_Compra {
+      width: 100%;
+      margin: 15px 0 0 0;
+    }
+  
+    #totales {
+      margin-right: 0;
+    }
+  }
+  
+  @media (max-width: 768px) {
+  .producto-carrito {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .producto-carrito img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .info-producto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .botones-cantidad {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .botones-cantidad button {
+    font-size: 20px;
+    padding: 5px 10px;
+  }
+}
+
+/* --- Tu media query existente para móvil --- */
+@media (max-width: 768px) {
+  .contenedor-carrito {
+    flex-direction: column;
+    align-items: center;
+  }
+  .productos-totales,
+  .formulario-compra {
+    width: 100%;
+    margin: 0;
+  }
+  /* ... tus reglas anteriores ... */
+}
+
+/* --- Nuevos ajustes para totales y tarjetas --- */
+@media (max-width: 768px) {
+  #totales {
+    width: 100%;
+    margin: 20px 0 0 0;
+    text-align: center;
+  }
+
+  #totales button {
+    width: 80%;
+    margin: 10px auto 0 auto;
+    display: block;
+  }
+  .botones-cantidad {
+    justify-content: flex-start;
+  }
+}
+
+/* ✅ Media query para móviles */
+@media screen and (max-width: 768px) {
+  .contenedor-carrito {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .productos-totales {
+      width: 100%;
+  }
+
+  .tarjeta-producto {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+  }
+
+  #totales {
+      margin-right: 0;
+  }
+
+  #totales button {
+      width: 80%;
+  }
+}

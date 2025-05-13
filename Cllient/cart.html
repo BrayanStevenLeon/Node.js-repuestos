@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="productos.css">
+    <link rel="stylesheet" href="cart.css">
+    <script src="./js/cartService.js" defer></script>
+    <script src="./js/cart.js" defer></script>
+    <title>Productos - Carrito</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="./productos.html"><img src="../imagenes/logo1.png" id="logo" alt="Logo"></a>
+            <div>
+                <a href="./cart.html" id="cart"><img src="../imagenes/iconos/shopping-cart.png" alt="Carrito de compras"><span id="cuenta-carrito">0</span></a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <p id="carrito-vacio"> Ups! no hay productos en el carrito. <a href="./index.html">Agrega algunos</a></p>
+        <div class="contenedor-carrito">
+        <div class="productos-totales">
+        <section id="productos-container"></section>
+        <section id="totales">
+            <p>Total unidades: <span id="unidades">0</span></p>
+            <p>Total precio: $<span id="precio">0</span></p>
+            <button id="reiniciar">Reiniciar carrito</button>
+        </section>
+        </div>
+        <div class="formulario-compra">
+            <h2>Información de Compra</h2>
+            <form id="formCompra">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" required>
+    
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="contacto">Número de Contacto:</label>
+                <input type="text" id="contacto" name="contacto" required>
+    
+                <label for="direccion">Dirección de Envío:</label>
+                <textarea id="direccion" name="direccion" required></textarea>
+    
+                <label for="metodoPago">Método de Pago:</label>
+                <select id="metodoPago" name="metodoPago" required>
+                    <option value="tarjeta">Tarjeta</option>
+                    <option value="efectivo">Efectivo</option>
+                    <option value="transferencia">Transferencia</option>
+                </select>
+    
+                <button type="submit" id="boton_Compra" disabled>Comprar</button>
+            </form>
+        </div>
+    </div>
+    </main>
+</body>
+</html>

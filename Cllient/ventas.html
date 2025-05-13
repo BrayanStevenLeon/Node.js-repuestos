@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Módulo de Ventas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./ventas.css"> <!-- si deseas estilos -->
+  <style>
+    /* Oculta todo el contenido hasta que validemos sesión */
+    body { visibility: hidden; }
+  </style>
+</head>
+<body>
+  <header class="vertical-menu">
+    <img src="../imagenes/logo1.png" alt="Logo tienda autorrepuestos" />
+    <nav>
+      <ul>
+        <li><a href="dashboard.html">Usuarios</a></li>
+        <li><a href="inventory.html"></i>Productos</a></li>
+        <li><a href="ventas.html">Ventas</a></li>
+        <li><a href="reportes.html">Reportes</a></li>
+      </ul>
+    </nav>
+    <button id="logoutButton"><i class="fa-solid fa-right-from-bracket"></i></button>
+  </header>
+  <div class="nombreUsuario">
+    <h2>Bienvenido, <span id="nombreUsuario"></span></h2>
+    <p>Rol: <span id="rolUsuario"></span></p>
+  </div>
+  <hr class="divider" />
+  <div class="container">
+    <div style="margin-bottom: 15px;">
+      <button id="btnExportPDF">📄 Exportar PDF</button>
+      <button id="btnExportExcel">📊 Exportar Excel</button>
+      <div class="flitroPago">
+        <label for="filtroEstadoPago">Filtrar por estado de pago:</label>
+         <select id="filtroEstadoPago">
+         <option value="todos">Todos</option>
+         <option value="pendiente">Pendiente</option>
+         <option value="pagado">Pagado</option>
+         <option value="cancelado">Cancelado</option>
+         </select>
+       </div>
+    </div>
+    <h1>Listado de Ventas</h1>
+    <div class="tabla-scroll">
+    <table class="ventas-table" id="tabla-ventas">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Email</th>
+          <th>Dirección</th>
+          <th>Contacto</th>
+          <th>Método de Pago</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+          <th>Total</th>
+          <th class="no-export">Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="ventasTableBody">
+        <!-- Filas generadas dinámicamente con JS -->
+      </tbody>
+    </table>
+  </div>
+  </div>
+  <div id="modalDetalle" class="modal">
+    <div class="modal-content">
+      <span id="cerrarModalDetalle" class="close">&times;</span>
+      <h2>Detalle de la Compra</h2>
+      <table id="tablaDetalle">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>  
+  <!-- jsPDF + autoTable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+<!-- SheetJS para Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="./js/ventas.js"></script>
+ 
+</body>
+</html>

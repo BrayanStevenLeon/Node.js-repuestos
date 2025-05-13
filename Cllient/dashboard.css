@@ -1,0 +1,243 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+  }
+  
+ 
+  .vertical-menu {
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 100%;
+    background-color: #181717;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .vertical-menu img {
+    max-width: 70%;
+    margin-bottom: 70px;
+  }
+  
+  .vertical-menu nav ul {
+    list-style: none;
+    flex-grow: 1;
+  }
+  
+  .vertical-menu nav ul li {
+    border-bottom: 1px solid #474747;
+    padding: 7px 29px;
+  }
+  
+  .vertical-menu nav ul li a {
+    text-decoration: none;
+    text-align: center;
+    color: #ecf0f1;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    transition: background-color 0.3s ease;
+  }
+  
+  
+  .vertical-menu button#logoutButton {
+    background-color: #c21111;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: auto; 
+  }
+  
+  .vertical-menu button#logoutButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px #7c1e1e;
+  }
+  
+ 
+  .main-content {
+    margin-left: 270px; 
+    padding: 30px;
+  }
+  
+  
+  .nombreUsuario h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .nombreUsuario p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  .divider {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 30px;
+    margin-top: -10px;
+  }
+  
+#userForm {
+    background-color: #fff;
+    padding: 20px;
+    max-width: 100%; 
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  
+  #userForm h2 {
+    margin-bottom: 15px;
+    font-size: 22px;
+  }
+  
+  
+  .form-fields {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px; 
+    flex-wrap: wrap; 
+  }
+  
+  
+  .form-fields input,
+  .form-fields select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;
+    min-width: 150px;
+  }
+  
+  
+  .form-fields button[type="submit"] {
+    background-color: #3498db;
+    border: none;
+    padding: 10px 15px;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0; 
+  }
+  
+  .form-fields button[type="submit"]:hover {
+    background-color: #2980b9;
+  }
+  
+  h3{
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+
+  table th,
+  table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  table th {
+    background-color: #007bff;
+    color: #ffff;
+    font-weight: bold;
+  }
+  
+  table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  #userTableBody button{
+    background-color: #e6d70f;
+    border: none;
+    color: white;
+    margin-left: 15px;
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  #userTableBody .eliminar{
+    background-color: #e40f0f;
+  }
+  
+  #btnExportPDFUsuarios,
+  #btnExportExcelUsuarios{
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+ 
+ #btnExportPDFUsuarios{
+  background-color: #d9534f;
+  color: white;
+  
+ }
+ 
+ #btnExportPDFUsuarios:hover{
+  background-color: #c9302c;
+  transform: scale(1.03);
+ }
+
+ #btnExportExcelUsuarios{
+  background-color: #5cb85c;
+  color: white;
+ }
+
+ #btnExportExcelUsuarios:hover{
+  background-color: #449d44;
+  transform: scale(1.03);
+ }
+
+  @media (max-width: 768px) {
+    .vertical-menu {
+      width: 200px;
+    }
+    .main-content {
+      margin-left: 220px;
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .form-fields {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+  

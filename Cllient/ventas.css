@@ -1,0 +1,356 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+  }
+  
+ 
+  .vertical-menu {
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 100%;
+    background-color: #181717;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .vertical-menu img {
+    max-width: 70%;
+    margin-bottom: 70px;
+  }
+  
+  .vertical-menu nav ul {
+    list-style: none;
+    flex-grow: 1;
+  }
+  
+  .vertical-menu nav ul li {
+    border-bottom: 1px solid #474747;
+    padding: 7px 29px;
+  }
+  
+  .vertical-menu nav ul li a {
+    text-decoration: none;
+    text-align: center;
+    color: #ecf0f1;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    transition: background-color 0.3s ease;
+  }
+  
+  
+  .vertical-menu button#logoutButton {
+    background-color: #c21111;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: auto; 
+  }
+  
+  .vertical-menu button#logoutButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px #7c1e1e;
+  }
+
+  .nombreUsuario h2 {
+    margin-left: 240px; 
+    padding: 25px;
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+  
+  .nombreUsuario p {
+    margin-left: 270px; 
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  .divider {
+    width: 81%;
+    border-bottom: 1px solid #ddd;
+    margin-left: 240px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+  }
+
+  .container {
+    max-width: 1110px;
+    margin: 40px auto 0 auto;
+    background: #fff;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-left: 235px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .ventas-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    word-wrap: break-word;
+  }
+  
+  .ventas-table thead {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .ventas-table th,
+  .ventas-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .ventas-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .ventas-table tbody tr:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Estado de pago */
+  .estado-pago {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: capitalize;
+    display: inline-block;
+  }
+  
+  .estado-pago.pagado {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .estado-pago.pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .estado-pago.cancelado {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  .btn-pagar {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+  
+  .btn-pagar:hover {
+    background-color: #218838;
+  }
+  
+  .btn-cancelar{
+    background-color: #aa1818;
+    color: white;
+    border: none;
+    padding: 5px 13px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+  .btn-cancelar:hover{
+    background-color: #cc1414;
+  }
+
+  .btn-descargar-factura{
+    background-color: #e6e20b;
+    color: white;
+    border: none;
+    padding: 5px 13px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  .btn-detalle{
+    background-color: #5f5e5e;
+      color: white;
+      border: none;
+      padding: 5px 11px;
+      margin-right: 45px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 0.85rem;
+  }
+
+  /* Estilo para el fondo del modal */
+  .modal {
+    display: none; /* Oculto inicialmente */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  }
+  
+  /* Contenido del modal */
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  /* Botón cerrar */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+  }
+  
+  /* Título */
+  .modal-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* Tabla */
+  #tablaDetalle {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.95rem;
+  }
+  
+  #tablaDetalle th,
+  #tablaDetalle td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+  
+  #tablaDetalle thead {
+    background-color: #007bff;
+    color: #ffff;
+  }
+  
+  #tablaDetalle tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  #tablaDetalle tbody tr:hover {
+    background-color: #e6e7e7;
+  }
+  
+  /* Animación suave */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+#btnExportPDF,
+#btnExportExcel {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Estilo para el botón de PDF */
+#btnExportPDF {
+  background-color: #d9534f;
+  color: white;
+}
+
+#btnExportPDF:hover {
+  background-color: #c9302c;
+  transform: scale(1.03);
+}
+
+/* Estilo para el botón de Excel */
+#btnExportExcel {
+  background-color: #5cb85c;
+  color: white;
+}
+
+#btnExportExcel:hover {
+  background-color: #449d44;
+  transform: scale(1.03);
+}
+.flitroPago {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 300px;
+  margin-left: 790px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.flitroPago label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.flitroPago select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.flitroPago select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+}

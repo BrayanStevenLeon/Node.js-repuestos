@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <script defer src="dashboard.js"></script>
+  </head>
+  <body>
+    <div id="loadingScreen" style="position:fixed; inset:0; background:white; z-index:9999; display:flex; align-items:center; justify-content:center;">
+      <p>Cargando...</p>
+    </div>
+    <header class="vertical-menu">
+      <img src="../imagenes/logo1.png" alt="Logo tienda autorrepuestos" />
+      <nav>
+        <ul>
+          <li><a href="#">Usuarios</a></li>
+          <li><a href="inventory.html"></i>Productos</a></li>
+          <li><a href="ventas.html">Ventas</a></li>
+          <li><a href="reportes.html">Reportes</a></li>
+        </ul>
+      </nav>
+      <button id="logoutButton"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </header>
+    <div class="main-content">
+      <div class="nombreUsuario">
+        <h2>Bienvenido, <span id="nombreUsuario"></span></h2>
+        <p>Rol: <span id="rolUsuario"></span></p>
+    </div>
+    <hr class="divider" />
+    <div id="gestionUsuarios">
+      <form id="userForm">
+        <h2>Agregar Usuarios</h2>
+        <div class="form-fields">
+          <input type="text" id="nombre" placeholder="Nombre" required>
+          <input type="email" id="email" placeholder="Email" required>
+          <input type="password" id="contraseña" placeholder="Contraseña" required>
+          <select id="rol">
+            <option value="administrador">Admin</option>
+            <option value="empleado">Empleado</option>
+          </select>
+          <button type="submit">Agregar Usuario</button>
+        </div>
+      </form>
+      <div class="mb-3">
+        <button id="btnExportPDFUsuarios" class="btn btn-danger">📄 Exportar PDF</button>
+        <button id="btnExportExcelUsuarios" class="btn btn-success">📊 Exportar Excel</button>
+      </div>  
+      <h3>Usuarios Registrados</h3>    
+      <table border="1" id="tabla-usuarios" class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Fecha</th>
+            <th class="no-export">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody"></tbody>
+      </table>
+    </div>
+    </div>
+  </body>
+  <!-- jsPDF y autoTable -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+<!-- SheetJS para Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+
+</html>
