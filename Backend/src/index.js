@@ -25,24 +25,18 @@ const app = express();
 app.set("port", process.env.PORT || 4000);
 
 
-app.use(cors({
+// CORS
+const corsOptions = {
     origin: [
         "http://127.0.0.1:5500",
         "http://127.0.0.1:5501",
         "https://nodejs-repuestos-production.up.railway.app"
     ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
-}));
-
-// Manejo explícito de las preflight requests
-app.options('*', cors({
-    origin: [
-        "http://127.0.0.1:5500",
-        "http://127.0.0.1:5501",
-        "https://nodejs-repuestos-production.up.railway.app"
-    ],
-    credentials: true
-}));
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Configurar sesiones
 app.use(session({
@@ -51,8 +45,8 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        secure: true,
-        sameSite: 'none' 
+       secure: process.env.NODE_ENV === 'production', 
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' 
     }
 }));
 
