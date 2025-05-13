@@ -5,6 +5,7 @@ const database = require("./database");
 const session = require('express-session');
 const cors = require('cors');
 const path = require("path");
+const helmet = require('helmet');
 
 //rutas
 const authRoutes = require('../routes/authRoutes');
@@ -24,17 +25,7 @@ const app = express();
 //configurar puerto
 app.set("port", process.env.PORT || 4000);
 
-// Redirigir todo HTTP a HTTPS en producción (excepto preflight)
-app.use((req, res, next) => {
-  if (process.env.NODE_ENV === 'production') {
-    const proto = req.headers['x-forwarded-proto'];
-    if (proto && proto !== 'https' && req.method !== 'OPTIONS') {
-      return res.redirect('https://' + req.headers.host + req.url);
-    }
-  }
-  next();
-});
-
+app.use(helmet());
 
 // CORS
 const corsOptions = {
@@ -46,8 +37,25 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 };
+
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
+
+// Redirigir todo HTTP a HTTPS en producción (excepto preflight)
+app.use((req, res, next) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const proto = req.headers['x-forwarded-proto'] || req.protocol;
+
+  // Solo redirigir si:
+  // - Está en producción
+  // - No es un OPTIONS (preflight)
+  // - No se usa HTTPS
+  if (isProduction && proto !== 'https' && req.method !== 'OPTIONS') {
+    return res.redirect(301, `https://${req.headers.host}${req.url}`);
+  }
+
+  next();
+});
 
 // Configurar sesiones
 app.use(session({

@@ -66,7 +66,7 @@ document.getElementById("formCategoria").addEventListener("submit", async (event
     console.log("Datos enviados al backend:", { nombre, descripcion });
     const data = { nombre, descripcion };
    
-    const url = id ? `https://nodejs-repuestos-production.up.railway.app/api/inventory/categorias/editar/${id}` : "http://nodejs-repuestos-production.up.railway.app/api/inventory/categorias/agregar";
+    const url = id ? `https://nodejs-repuestos-production.up.railway.app/api/inventory/categorias/editar/${id}` : "https://nodejs-repuestos-production.up.railway.app/api/inventory/categorias/agregar";
     const method = id ? "PUT" : "POST";
     
     try {
