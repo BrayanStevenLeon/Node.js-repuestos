@@ -37,7 +37,7 @@ const addProduct = async (req, res) => {
       categoria_id, proveedor_id, usuario_id
     } = req.body;
     const urlImagen = req.file
-      ? `../imagenes/productos/${req.file.filename}`
+      ? `/imagenes/productos/${req.file.filename}`
       : null;
 
     // 1) Inserto el producto
@@ -71,7 +71,7 @@ const updateProduct = async (req, res) => {
     const connection = await database.getConnection();
     const { nombre, descripcion, precio, stock, categoria_id, proveedor_id, usuario_id } = req.body;
     const id = req.params.id;
-    const urlImagen = req.file ? `../imagenes/productos/${req.file.filename}` : null;
+    const urlImagen = req.file ? `/imagenes/productos/${req.file.filename}` : null;
 
     const sql = urlImagen
       ? "UPDATE productos SET nombre=?, descripcion=?, urlImagen=?, precio=?, stock=?, categoria_id=?, proveedor_id=? WHERE id=?"
