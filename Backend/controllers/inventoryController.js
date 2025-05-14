@@ -37,7 +37,7 @@ const addProduct = async (req, res) => {
       categoria_id, proveedor_id, usuario_id
     } = req.body;
     const urlImagen = req.file
-      ? `/imagenes/productos/${req.file.filename}`
+      ? `../imagenes/productos/${req.file.filename}`
       : null;
 
     // 1) Inserto el producto
