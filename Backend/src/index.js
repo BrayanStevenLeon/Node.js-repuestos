@@ -71,7 +71,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public')); 
-app.use("/imagenes", express.static(path.join(__dirname, 'imagenes')));
+app.use("/imagenes", express.static(path.join(__dirname, "../imagenes")));
 app.use('/facturas', express.static(path.join(__dirname, '../public/facturas')));
 app.use(
   '/reportes',

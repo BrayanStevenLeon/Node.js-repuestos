@@ -6,7 +6,7 @@ const inventoryController = require('../controllers/inventoryController');
 
 // Configuración de multer para subir imágenes
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '/imagenes/productos')),
+  destination: (req, file, cb) => cb(null, path.join(__dirname, '../imagenes/productos')),
   filename: (req, file, cb) => cb(null, `${Date.now()}_${file.originalname}`)
 });
 
