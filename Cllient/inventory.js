@@ -152,7 +152,7 @@ document.getElementById("formProveedor").addEventListener("submit", async (event
     const direccion = document.getElementById("proveedorDireccion").value.trim();
 
     const data = { nombre, contacto, telefono, email, direccion };
-    const url = id ? `https://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores/editar/${id}` : "http://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores/agregar";
+    const url = id ? `https://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores/editar/${id}` : "https://nodejs-repuestos-production.up.railway.app/api/inventory/proveedores/agregar";
     const method = id ? "PUT" : "POST";
 
     try {
