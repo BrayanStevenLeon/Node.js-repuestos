@@ -44,13 +44,9 @@ app.options('*', cors(corsOptions));
 // Redirigir todo HTTP a HTTPS en producción (excepto preflight)
 app.use((req, res, next) => {
   const isProduction = process.env.NODE_ENV === 'production';
-  const proto = req.headers['x-forwarded-proto'] || req.protocol;
+  const proto = req.headers['x-forwarded-proto'];
 
-  // Solo redirigir si:
-  // - Está en producción
-  // - No es un OPTIONS (preflight)
-  // - No se usa HTTPS
-  if (isProduction && proto !== 'https' && req.method !== 'OPTIONS') {
+  if (isProduction && proto && proto !== 'https' && req.method !== 'OPTIONS') {
     return res.redirect(301, `https://${req.headers.host}${req.url}`);
   }
 
