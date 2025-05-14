@@ -195,64 +195,95 @@ async function eliminarProveedor(id) {
     }
 }
 
+// Constantes Cloudinary (ponlas al inicio de tu inventory.js)
+const CLOUD_NAME = 'dd8dvu9wa';
+const UPLOAD_PRESET = 'autorrepuestos_preset';
+
+async function subirImagenACloudinary(file) {
+  const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', UPLOAD_PRESET);
+
+  const res = await fetch(url, {
+    method: 'POST',
+    body: formData
+  });
+  const data = await res.json();
+  console.log('Cloudinary response:', data);
+  if (!data.secure_url) {
+    throw new Error(data.error?.message || 'Error subiendo imagen');
+  }
+  return data.secure_url;
+}
+
 // Manejar el formulario de productos
 document.getElementById('productForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-  
-    // 1. Obtén el usuario
-    const usuario = JSON.parse(localStorage.getItem('usuario'));
-    if (!usuario) {
-      alert('No has iniciado sesión');
+  e.preventDefault();
+
+  const usuario = JSON.parse(localStorage.getItem('usuario'));
+  if (!usuario) {
+    alert('No has iniciado sesión');
+    return;
+  }
+
+  // Campos del formulario
+  const id           = document.getElementById('productId').value;
+  const nombre       = document.getElementById('nombre').value;
+  const descripcion  = document.getElementById('descripcion').value;
+  const precio       = document.getElementById('precio').value;
+  const stock        = document.getElementById('stock').value;
+  const categoria_id = document.getElementById('categoria').value;
+  const proveedor_id = document.getElementById('proveedor').value;
+  const imagenFile   = document.getElementById('imagen').files[0];
+
+  // 1) Sube la imagen a Cloudinary (si existe)
+  let urlImagen = '';
+  if (imagenFile) {
+    try {
+      urlImagen = await subirImagenACloudinary(imagenFile);
+    } catch (err) {
+      console.error('Error al subir imagen:', err);
+      alert('Error al subir la imagen: ' + err.message);
       return;
     }
-  
-    const id = document.getElementById('productId').value;
-    const nombre = document.getElementById('nombre').value;
-    const descripcion = document.getElementById('descripcion').value;
-    const precio = document.getElementById('precio').value;
-    const stock = document.getElementById('stock').value;
-    const categoria_id = document.getElementById('categoria').value;
-    const proveedor_id = document.getElementById('proveedor').value;
-    const imagen = document.getElementById('imagen').files[0];
-  
-    // 2. Arma el FormData
-    const formData = new FormData();
-    formData.append('nombre', nombre);
-    formData.append('descripcion', descripcion);
-    formData.append('precio', precio);
-    formData.append('stock', stock);
-    formData.append('categoria_id', categoria_id);
-    formData.append('proveedor_id', proveedor_id);
-    
-    // <-- aquí agregas el usuario_id -->
-    formData.append('usuario_id', usuario.id);
-  
-    if (imagen) {
-      formData.append('imagen', imagen);
-    }
-  
-    try {
-      if (id) {
-        await fetch(`${apiUrl}/editar/${id}`, {
-          method: 'PUT',
-          body: formData
-        });
-        alert('Producto actualizado con éxito');
-      } else {
-        await fetch(`${apiUrl}/agregar`, {
-          method: 'POST',
-          body: formData
-        });
-        alert('Producto agregado con éxito');
-      }
-  
-      limpiarFormulario();
-      await cargarProductos();
-    } catch (error) {
-      console.error("Error al enviar producto:", error);
-      alert('Ocurrió un error al guardar el producto');
-    }
-  });
+  }
+
+  // 2) Prepara objeto a enviar
+  const productoData = {
+    nombre,
+    descripcion,
+    precio,
+    stock,
+    categoria_id,
+    proveedor_id,
+    usuario_id: usuario.id,
+    urlImagen
+  };
+
+  // 3) Envía al backend
+  try {
+    const endpoint = id
+      ? `${apiUrl}/editar/${id}`
+      : `${apiUrl}/agregar`;
+
+    await fetch(endpoint, {
+      method: id ? 'PUT' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(productoData)
+    });
+
+    alert(id ? 'Producto actualizado con éxito' : 'Producto agregado con éxito');
+    limpiarFormulario();
+    await cargarProductos();
+
+  } catch (err) {
+    console.error('Error al guardar producto:', err);
+    alert('Ocurrió un error al guardar el producto');
+  }
+});
+
+
 // Cargar productos desde la API
 async function cargarProductos() {
     try {
@@ -270,7 +301,7 @@ async function cargarProductos() {
                 <td>${producto.stock}</td>
                 <td>${producto.categoria}</td>
                 <td>${producto.proveedor}</td>
-                <td><img src="${producto.urlImagen.replace('../', '')}" width="50"></td>
+                <td><img src="${producto.urlImagen}" width="50"></td>
                 <td>
                     <button onclick="editarProducto(${producto.id})"><i class="fa-solid fa-pen-to-square"></i></button>
                     <button class="eliminar" onclick="eliminarProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button>
@@ -510,3 +541,4 @@ document.getElementById("btnExportPDFProveedores").addEventListener("click", () 
     doc.save("proveedores.pdf");
   };
 });
+
