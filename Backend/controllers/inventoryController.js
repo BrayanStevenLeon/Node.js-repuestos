@@ -34,21 +34,15 @@ const addProduct = async (req, res) => {
     const connection = await database.getConnection();
     const {
       nombre, descripcion, precio, stock,
-      categoria_id, proveedor_id, usuario_id
+      categoria_id, proveedor_id, usuario_id, urlImagen: urlBody
     } = req.body;
 
-    let urlImagen = null;
-
-    // ✅ Subir a Cloudinary si hay imagen
-    if (req.file) {
-      const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: "productos"
-      });
-      urlImagen = result.secure_url;
-    }
+    // ✅ Usa la URL desde el body o, como fallback, la de multer (req.file.path)
+    const urlImagen = urlBody || (req.file ? req.file.path : null);
 
     const [result] = await connection.query(
-      `INSERT INTO productos (nombre, descripcion, urlImagen, precio, stock, categoria_id, proveedor_id)
+      `INSERT INTO productos 
+         (nombre, descripcion, urlImagen, precio, stock, categoria_id, proveedor_id)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [nombre, descripcion, urlImagen, precio, stock, categoria_id, proveedor_id]
     );
@@ -76,25 +70,37 @@ const updateProduct = async (req, res) => {
   try {
     const connection = await database.getConnection();
     const {
-      nombre, descripcion, precio, stock,
-      categoria_id, proveedor_id, usuario_id
+      nombre,
+      descripcion,
+      precio,
+      stock,
+      categoria_id,
+      proveedor_id,
+      usuario_id,
+      urlImagen: urlFromBody // <-- URL enviada desde el front
     } = req.body;
     const id = req.params.id;
 
-    let urlImagen = null;
+    // 1) Determinar la URL definitiva de la imagen:
+    let urlImagen = urlFromBody || null;
 
-    // ✅ Subir nueva imagen a Cloudinary si se proporcionó
-    if (req.file) {
+    // 2) Si llega un archivo (req.file), subirlo y usar su URL:
+    if (!urlImagen && req.file) {
+      // ejemplo con Cloudinary SDK
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "productos"
       });
       urlImagen = result.secure_url;
     }
 
-    // ✅ Preparar consulta SQL dependiendo si hay nueva imagen o no
+    // 3) Construir la consulta según si hay o no nueva URL:
     const sql = urlImagen
-      ? `UPDATE productos SET nombre=?, descripcion=?, urlImagen=?, precio=?, stock=?, categoria_id=?, proveedor_id=? WHERE id=?`
-      : `UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=?, categoria_id=?, proveedor_id=? WHERE id=?`;
+      ? `UPDATE productos
+         SET nombre=?, descripcion=?, urlImagen=?, precio=?, stock=?, categoria_id=?, proveedor_id=?
+         WHERE id=?`
+      : `UPDATE productos
+         SET nombre=?, descripcion=?, precio=?, stock=?, categoria_id=?, proveedor_id=?
+         WHERE id=?`;
 
     const params = urlImagen
       ? [nombre, descripcion, urlImagen, precio, stock, categoria_id, proveedor_id, id]
@@ -102,13 +108,14 @@ const updateProduct = async (req, res) => {
 
     await connection.query(sql, params);
 
-    // ✅ Registrar actividad
+    // 4) Registrar en logs_actividad
     if (usuario_id) {
       const descripcionLog = `El producto con ID ${id} fue actualizado: ${nombre}`;
-      await connection.query(`
-        INSERT INTO logs_actividad (usuario_id, producto_id, accion, descripcion)
-        VALUES (?, ?, 'actualización', ?)
-      `, [usuario_id, id, descripcionLog]);
+      await connection.query(
+        `INSERT INTO logs_actividad (usuario_id, producto_id, accion, descripcion)
+         VALUES (?, ?, 'actualización', ?)`,
+        [usuario_id, id, descripcionLog]
+      );
     }
 
     res.status(200).send("Producto actualizado con éxito");
