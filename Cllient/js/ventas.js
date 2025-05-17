@@ -3,7 +3,7 @@ async function initVentas() {
   const usuarioStr = localStorage.getItem('usuario');
   if (!usuarioStr) {
     alert('No has iniciado sesión');
-    window.location.replace('index.htm');
+    window.location.replace('index.html');
     return;
   }
 
@@ -161,7 +161,7 @@ document.addEventListener('click', async e => {
 function cerrarSesion() {
   fetch('https://nodejs-repuestos-production.up.railway.app/api/logout', { method: 'POST' })
     .then(r => {
-      if (r.ok) { localStorage.removeItem('usuario'); location.replace('index.htm'); }
+      if (r.ok) { localStorage.removeItem('usuario'); location.replace('index.html'); }
       else alert('Error al cerrar sesión');
     }).catch(() => alert('Error al cerrar sesión'));
 }

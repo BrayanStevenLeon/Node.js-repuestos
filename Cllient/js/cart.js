@@ -96,7 +96,7 @@ formCompra.addEventListener("submit", function (e) {
     mensaje = `
       <div class="pago-contenedor">
       <div class="pago-imagen">
-        <img src="../imagenes/tarjeta.png" alt="Tarjeta de crédito">
+        <img src="./imagenes/tarjeta.png" alt="Tarjeta de crédito">
       </div>
       <div class="pago-formulario">
         <h3>Pago con Tarjeta</h3>

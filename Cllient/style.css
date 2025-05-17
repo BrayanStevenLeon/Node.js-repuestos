@@ -91,7 +91,7 @@ nav ul li:hover .submenu {
 
 section .contenido-inicio{
     position: relative;
-    background-image: url('../imagenes/Fondo-inicio.jpg'); 
+    background-image: url('./imagenes/Fondo-inicio.jpg'); 
     background-size: cover;
     background-position: center; 
     background-repeat: no-repeat; 
@@ -647,11 +647,18 @@ section .contenido-inicio a:hover {
   .marcas-cta {
     font-size: 20px;
     padding: 10px;
+    left: 60px;
+    bottom: 20px;
+  }
+
+  .marcas-servicios{
+    bottom: 50px;
   }
 
   .marcas-imagenes img {
     height: 60px;
     margin-top: 30px;
+    bottom: 20px;
   }
 }
 

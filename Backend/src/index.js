@@ -32,7 +32,8 @@ const corsOptions = {
     origin: [
         "http://127.0.0.1:5500",
         "http://127.0.0.1:5501",
-        "https://nodejs-repuestos-production.up.railway.app"
+        "https://nodejs-repuestos-production.up.railway.app",
+        "https://melodic-speculoos-42a9e6.netlify.app"
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true

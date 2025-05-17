@@ -3,7 +3,7 @@ window.onload = function () {
 
     if (!usuarioString) {
         // Evita navegación hacia atrás y redirige a index
-        window.location.replace('index.htm');
+        window.location.replace('index.html');
         return;
     }
 
@@ -104,7 +104,7 @@ document.getElementById('logoutButton').addEventListener('click', async function
 
         if (response.ok) {
             localStorage.removeItem('usuario');
-            location.replace('index.htm');
+            location.replace('index.html');
         } else {
             alert('Error al cerrar sesión');
         }

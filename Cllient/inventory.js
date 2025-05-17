@@ -6,7 +6,7 @@ async function initPagina() {
     // Si quieres limpiar todo antes de redirigir, descomenta:
     // document.body.innerHTML = '';
     // Redirige sin dejar rastro
-    window.location.replace('index.htm');
+    window.location.replace('index.html');
   } else {
     // Pasa la validación: mostramos la página y arrancamos tu módulo
     document.body.style.visibility = 'visible';
@@ -420,7 +420,7 @@ document.getElementById('logoutButton').addEventListener('click', async function
 
         if (response.ok) {
             localStorage.removeItem('usuario');
-            location.replace('index.htm');
+            location.replace('index.html');
         } else {
             alert('Error al cerrar sesión');
         }
