@@ -58,6 +58,8 @@ document.getElementById('btnGenerarReporte').addEventListener('click', async () 
     }
 });
 
+const API_BASE = 'http://127.0.0.1:4000';
+
 async function abrirHistorialReportes() {
     try {
       const usuario = JSON.parse(localStorage.getItem("usuario"));
@@ -85,7 +87,7 @@ async function abrirHistorialReportes() {
           <td>${reporte.tipo}</td>
           <td>${new Date(reporte.fecha_generacion).toLocaleString()}</td>
           <td>
-            <a href="/reportes/${reporte.archivo}" target="_blank" id="icono" ><i class="fa-solid fa-download"></i></a>
+            <a href="${API_BASE}/reportes/${reporte.archivo}" target="_blank" id="icono" ><i class="fa-solid fa-download"></i></a>
           </td>
         `;
         tbody.appendChild(tr);
