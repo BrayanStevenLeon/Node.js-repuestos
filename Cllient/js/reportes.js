@@ -1,24 +1,40 @@
-document.addEventListener("DOMContentLoaded", () => {
+async function initReportes() {
+  const usuarioString = localStorage.getItem('usuario');
+  if (!usuarioString) {
+    document.body.innerHTML = '';
+    alert('No has iniciado sesión');
+    window.location.replace('login.html');
+    return;
+  }
+  // Sesión válida: mostramos la página y arrancamos módulos
+  document.body.style.visibility = 'visible';
   mostrarUsuario();
   cargarResumenEstadisticas();
   cargarVentasPorCategoria();
   cargarLogs();
 
-   // Delegación de evento para cerrar log-cards
-   document.getElementById('logs-container').addEventListener('click', (e) => {
+  // Delegación de cierre de log-cards
+  document.getElementById('logs-container').addEventListener('click', e => {
     if (e.target.classList.contains('close-log')) {
       const card = e.target.closest('.log-card');
       const logId = parseInt(card.getAttribute('data-log-id'));
-      // Guardar ocultación en localStorage
       const hidden = JSON.parse(localStorage.getItem('hiddenLogs') || '[]');
       if (!hidden.includes(logId)) {
         hidden.push(logId);
         localStorage.setItem('hiddenLogs', JSON.stringify(hidden));
       }
-      // Remover tarjeta
       card.remove();
     }
   });
+}
+
+// Ejecutamos la inicialización en load y pageshow (flecha atrás)
+window.addEventListener('DOMContentLoaded', initReportes);
+window.addEventListener('pageshow', (event) => {
+  // Sólo re-inicializamos si viene de bfcache (botón atrás)
+  if (event.persisted) {
+    initReportes();
+  }
 });
 
 document.getElementById('btnGenerarReporte').addEventListener('click', async () => {
@@ -128,10 +144,10 @@ async function abrirHistorialReportes() {
       }
 
       // Bloquear opción en el menú lateral
-      const usuariosMenu = document.querySelector('nav ul li a[href="dashboard.html"]');
-      if (usuariosMenu) {
-        usuariosMenu.style.display = 'none';
-      }
+       const usuariosMenu = document.getElementById('menuUsuarios');
+       if (usuariosMenu) {
+          usuariosMenu.style.display = 'none';
+    }
 
       // ocultar generar reportes
       const geneReportes = document.getElementById('reporte-contenedor');
@@ -153,7 +169,7 @@ document.getElementById('logoutButton').addEventListener('click', async function
 
     if (response.ok) {
       localStorage.removeItem('usuario');
-      location.replace('index.html');
+      location.replace('login.html');
   } else {
       alert('Error al cerrar sesión');
   }

@@ -2,11 +2,12 @@
 async function initPagina() {
   const usuario = localStorage.getItem('usuario');
   if (!usuario) {
+    document.body.innerHTML = '';
     alert('No has iniciado sesión');
     // Si quieres limpiar todo antes de redirigir, descomenta:
     // document.body.innerHTML = '';
     // Redirige sin dejar rastro
-    window.location.replace('index.html');
+    window.location.replace('login.html');
   } else {
     // Pasa la validación: mostramos la página y arrancamos tu módulo
     document.body.style.visibility = 'visible';
@@ -406,7 +407,7 @@ function mostrarUsuario() {
         }
         
          // Bloquear opción en el menú lateral
-      const usuariosMenu = document.querySelector('nav ul li a[href="dashboard.html"]');
+      const usuariosMenu = document.getElementById('menuUsuarios');
       if (usuariosMenu) {
         usuariosMenu.style.display = 'none';
       }

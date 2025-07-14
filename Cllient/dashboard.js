@@ -1,13 +1,23 @@
+// Forzar validación incluso cuando el navegador intenta mostrar desde caché
+window.onpageshow = function (event) {
+    if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+        location.reload(); // fuerza recarga real si se volvió con la flechita
+    }
+};
+
 window.onload = function () {
     const usuarioString = localStorage.getItem('usuario');
 
     if (!usuarioString) {
-        // Evita navegación hacia atrás y redirige a index
-        window.location.replace('index.html');
+        document.body.innerHTML = '';
+        alert("No has iniciado sesión");
+        window.location.replace('login.html'); // mejor que index.html
         return;
+    }else{
+        document.body.style.visibility = 'visible';
     }
 
-    // Solo si el usuario existe, carga lo demás
+    // Carga segura después de validar
     cargarUsuarios();
     mostrarUsuario();
 
@@ -141,13 +151,10 @@ function mostrarUsuario() {
             gestionUsuarios.style.display = 'none';
         }
 
-        // Bloquear opción en el menú lateral
-        const usuariosMenu = document.querySelector('nav ul li a[href="#"]');
+         // oculto el menú Usuarios
+        const usuariosMenu = document.getElementById('menuUsuarios');
         if (usuariosMenu) {
-            usuariosMenu.addEventListener('click', (e) => {
-                e.preventDefault();
-                alert("No tienes permisos para acceder a esta sección.");
-            });
+            usuariosMenu.style.display = 'none';
         }
     }
 }

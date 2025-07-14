@@ -2,13 +2,14 @@
 async function initVentas() {
   const usuarioStr = localStorage.getItem('usuario');
   if (!usuarioStr) {
+    document.body.innerHTML = '';
     alert('No has iniciado sesión');
-    window.location.replace('index.html');
+    window.location.replace('login.html');
     return;
+  }else{
+    document.body.style.visibility = 'visible';
   }
 
-  // Sesión válida: revelamos la página y arrancamos todo
-  document.body.style.visibility = 'visible';
   mostrarUsuario();
 
   // Configurar filtro por estado
@@ -161,7 +162,7 @@ document.addEventListener('click', async e => {
 function cerrarSesion() {
   fetch('https://nodejs-repuestos-production.up.railway.app/api/logout', { method: 'POST' })
     .then(r => {
-      if (r.ok) { localStorage.removeItem('usuario'); location.replace('index.html'); }
+      if (r.ok) { localStorage.removeItem('usuario'); location.replace('login.html'); }
       else alert('Error al cerrar sesión');
     }).catch(() => alert('Error al cerrar sesión'));
 }
@@ -176,10 +177,10 @@ function mostrarUsuario() {
   const usuario = JSON.parse(usuarioStr);
   document.getElementById('nombreUsuario').textContent = usuario.nombre;
   document.getElementById('rolUsuario').textContent = usuario.rol;
-  if (usuario.rol === 'empleado') {
-    const menu = document.querySelector('nav ul li a[href="dashboard.html"]');
-    if (menu) menu.style.display = 'none';
-  }
+   const usuariosMenu = document.getElementById('menuUsuarios');
+    if (usuariosMenu) {
+      usuariosMenu.style.display = 'none';
+    }
 }
 
 function mostrarDetalleModal(detalle) {
